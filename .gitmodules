@@ -1,0 +1,3 @@
+[submodule "opensearch-devops"]
+	path = opensearch-devops
+	url = https://github.com/opensearch-project/opensearch-devops.git
