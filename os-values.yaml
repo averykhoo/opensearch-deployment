@@ -1,2 +1,5 @@
 # override to use internal repo
-image: "docker.artifact.xtraman.org/opensearchproject/opensearch"
+image:    "docker.artifact.xtraman.org/opensearchproject/opensearch"
+
+# not enough resources on my local vm
+replicas: 1
