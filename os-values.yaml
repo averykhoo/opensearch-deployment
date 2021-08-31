@@ -104,7 +104,7 @@ hostAliases: [ ]
 #  - "foo.local"
 #  - "bar.local"
 
-image:                   "opensearchproject/opensearch"
+image:                   "docker.artifact.xtraman.org/opensearchproject/opensearch"
 # override image tag, which is .Chart.AppVersion by default
 imageTag:                ""  # defaults to 1.0.0
 imagePullPolicy:         "IfNotPresent"
