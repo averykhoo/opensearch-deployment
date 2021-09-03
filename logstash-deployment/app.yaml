@@ -77,7 +77,10 @@ spec:
                       - "ls-logstash"
               topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 120
-      volumes: [ ]
+      volumes:
+        - name: logstash-conf
+          configMap:
+            name: logstash-conf
       containers:
         - name: "logstash"
           securityContext:
@@ -119,4 +122,8 @@ spec:
           env:
             - name: LS_JAVA_OPTS
               value: "-Xmx1g -Xms1g"
-          volumeMounts: [ ]
+          volumeMounts:
+            - name: logstash-conf
+              mountPath: /usr/share/logstash/pipeline/logstash.conf
+              subPath: logstash.conf
+              readOnly: true
