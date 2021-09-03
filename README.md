@@ -12,5 +12,5 @@
   * `helm package opensearch-devops/Helm/opensearch-dashboards`
   * `helm install -f osd-values.yaml osd opensearch-dashboards-1.0.0.tgz`
 * https://opensearch.org/docs/clients/logstash/index/
-  * `helm install -f ls-values.yaml helm/elastic/logstash`
+  * `helm install -f ls-values.yaml ls helm/elastic/logstash`
 
