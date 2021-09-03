@@ -61,7 +61,7 @@ spec:
         chart: "logstash"
         heritage: "Helm"
         release: "ls"
-      annotations: [ ]
+      annotations: { }
     spec:
       securityContext:
         fsGroup: 1000
