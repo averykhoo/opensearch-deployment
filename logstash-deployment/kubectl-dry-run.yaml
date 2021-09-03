@@ -1,11 +1,10 @@
-DEBUG-NBOT:
-               W0903 02:28:24.890048  157838 warnings.go:70] policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget
-NAME:          ls
-LAST DEPLOYED: Fri Sep  3 02:28:24 2021
-NAMESPACE:     default
-STATUS:        pending-install
-REVISION:      1
-TEST SUITE:    None
+CONSOLE-LOG-LINE: W0903 02:28:24.890048  157838 warnings.go:70] policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget
+NAME:             ls
+LAST DEPLOYED:    Fri Sep  3 02:28:24 2021
+NAMESPACE:        default
+STATUS:           pending-install
+REVISION:         1
+TEST SUITE:       None
 USER-SUPPLIED VALUES:
   antiAffinity:            hard
   antiAffinityTopologyKey: kubernetes.io/hostname
@@ -221,7 +220,7 @@ COMPUTED VALUES:
         storage: 1Gi
 
 HOOKS:
-               ---
+                  ---
 MANIFEST1:
   # Source: logstash/templates/poddisruptionbudget.yaml
   apiVersion: policy/v1beta1
@@ -348,5 +347,5 @@ MANIFEST3:
             volumeMounts:
 
 NOTES:
-               1. Watch all cluster members come up.
-               $ kubectl get pods --namespace=default -l app=ls-logstash -w
+                  1. Watch all cluster members come up.
+                  $ kubectl get pods --namespace=default -l app=ls-logstash -w
