@@ -15,5 +15,8 @@
   * ~~helm install -f ls-values.yaml ls helm/elastic/logstash~~
   * `kubectl create configmap logstash-conf --from-file logstash-development/logstash.conf`
   * `kubectl apply -f logstash-deployment/app.yaml`
-  * 
+  *
 
+# todo
+
+* tolerations and node selectors
