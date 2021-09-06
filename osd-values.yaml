@@ -1,2 +1,55 @@
 # override to use internal repo
 image: "docker.artifact.xtraman.org/opensearchproject/opensearch-dashboards"
+
+config:
+  # dynamic:
+  #   opensearch-dashboards:
+  #     multitenancy_enabled: true
+  #     server_username: kibanaserver
+  #     index: '.opensearch-dashboards'
+  #   do_not_fail_on_forbidden: false
+
+  opensearch_dashboards.yml:
+    server:
+      name: kibana  # dashboards
+      host: "0"  # 0.0.0.0
+
+    opensearch:
+      username: "admin"  # todo: is this the right place?
+      password: "admin"  # todo: is this the right place?
+
+      hosts: http://elasticsearch-cluster-master:9200  # todo: should this be .Values.opensearchHosts?
+      ssl.verificationMode: none
+      requestHeadersWhitelist:
+        - "securitytenant"
+        - "Authorization"
+        - "X-Forwarded-For"
+        - "X-Username"
+        - "X-Roles"
+
+    security.showInsecureClusterWarning: false  # deprecated? not in docs
+
+    # https://opensearch.org/docs/security-plugin/configuration/proxy/#opensearch-dashboards-proxy-authentication
+    plugins:
+      security:
+        auth.type: "proxy"
+        proxycache:
+          user_header: "X-Username"
+          roles_header: "X-Roles"
+          roles_separator: ","  # is this needed? wasn't in the docs but should be the same as os-values.yml right?
+
+        # https://opensearch.org/docs/security-plugin/access-control/multi-tenancy/#configuration
+        multitenancy:
+          enabled: true
+          tenants:
+            enable_global: true
+            enable_private: true
+          enable_filter: false
+        readonly_mode.roles: [ "kibana_read_only" ]  # not in docs?
+
+
+      ## Dashboards TLS Config
+      ssl:
+        enabled: false
+        key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+        certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
