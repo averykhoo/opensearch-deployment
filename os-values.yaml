@@ -90,6 +90,7 @@ securityConfig:
                   config:
                     user_header: "X-Username"
                     roles_header: "X-Roles"
+                    roles_separator: ","
                 authentication_backend:
                   type: noop
       internal_users.yml:
