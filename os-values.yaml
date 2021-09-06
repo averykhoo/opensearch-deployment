@@ -1,2 +1,37 @@
 # override to use internal repo
 image: "docker.artifact.xtraman.org/opensearchproject/opensearch"
+
+# Allows you to add any config files in {{ .Values.configPath }}/config
+# such as opensearch.yml and log4j2.properties
+config:
+  opensearch.yml:
+    ######## Start OpenSearch Security Demo Configuration ########
+    # todo WARNING: revise all the lines below before you go into production
+    plugins:
+      security:
+        ssl:
+          http:
+            enabled: false
+        allow_unsafe_democertificates: true  # todo: don't leave as default?
+        authcz:
+          admin_dn:
+            - OU=RAPID,O=CSIT,L=Singapore,ST=Singapore,C=SG
+        restapi:
+          roles_enabled: [ "all_access", "security_rest_api_access", "admin" ]
+        system_indices:
+          indices:
+            [
+                ".opendistro-alerting-config",
+                ".opendistro-alerting-alert*",
+                ".opendistro-anomaly-results*",
+                ".opendistro-anomaly-detector*",
+                ".opendistro-anomaly-checkpoints",
+                ".opendistro-anomaly-detection-state",
+                ".opendistro-reports-*",
+                ".opendistro-notifications-*",
+                ".opendistro-notebooks",  # todo: remove? not in internal settings
+                ".opendistro-asynchronous-search-response*",  # todo: remove? not in internal settings
+            ]
+    ######## End OpenSearch Security Demo Configuration ########
+    cluster.routing.allocation.disk.threshold_enabled: false
+    node.max_local_storage_nodes: 3
