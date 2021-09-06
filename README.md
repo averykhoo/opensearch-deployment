@@ -20,3 +20,4 @@
 # todo
 
 * tolerations and node selectors
+* how to insert the pem files?

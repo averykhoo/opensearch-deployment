@@ -5,6 +5,7 @@ image: "docker.artifact.xtraman.org/opensearchproject/opensearch"
 # such as opensearch.yml and log4j2.properties
 config:
   opensearch.yml:
+    cluster.name: rapid-elk-cluster
     ######## Start OpenSearch Security Demo Configuration ########
     # todo WARNING: revise all the lines below before you go into production
     plugins:
@@ -96,3 +97,5 @@ securityConfig:
           reserved: false
           backend_roles: [ "access" ]
           description: "Maps access to manage_index, to allow user to create index partitions"
+
+esJavaOpts: "-Xmx4g -Xms4g"
