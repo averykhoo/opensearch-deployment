@@ -8,6 +8,7 @@
 * https://opensearch.org/docs/opensearch/install/helm/
   * `helm package opensearch-devops/Helm/opensearch`
   * `helm install -n default -f os-values.yaml os opensearch-1.0.0.tgz`
+  * `helm install -n default -f os-values.yaml --set replicas=1 os opensearch-1.0.0.tgz`
 * https://opensearch.org/docs/dashboards/install/helm/
   * `helm package opensearch-devops/Helm/opensearch-dashboards`
   * `helm install -n default -f osd-values.yaml osd opensearch-dashboards-1.0.0.tgz`
@@ -22,3 +23,5 @@
 * tolerations and node selectors
 * how to insert the pem files? 
   * https://opensearch.org/docs/security-plugin/configuration/generate-certificates/
+* how to use envoy and opa with kibana
+* do i need envoy and opa with elastic too?
