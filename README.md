@@ -13,8 +13,8 @@
   * `helm install -n default -f osd-values.yaml osd opensearch-dashboards-1.0.0.tgz`
 * https://opensearch.org/docs/clients/logstash/index/
   * ~~helm install -n default -f ls-values.yaml ls helm/elastic/logstash~~
-  * `kubectl create configmap logstash-conf --from-file logstash-development/logstash.conf`
-  * `kubectl apply -f logstash-deployment/app.yaml`
+  * `kubectl -n default create configmap logstash-conf --from-file logstash-development/logstash.conf`
+  * `kubectl -n default apply -f logstash-deployment/app.yaml`
   *
 
 # todo
