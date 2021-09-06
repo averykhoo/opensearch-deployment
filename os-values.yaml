@@ -80,7 +80,27 @@ securityConfig:
           reserved: true
         security_rest_api_access:
           reserved: true
-        blah-blah-blah-insert-values-here: ""  # todo: copypasta
+        alerting_view_alerts:
+          reserved: true
+          index_permissions:
+            - index_patterns: [ ".opendistro-alerting-alert*" ]
+              allowed_actions: [ "read" ]
+        alerting_crud_alerts:
+          reserved: true
+          index_permissions:
+            - index_patterns: [ ".opendistro-alerting-alert*" ]
+              allowed_actions: [ "crud" ]
+        alerting_full_access:
+          reserved: true
+          index_permissions:
+            - index_patterns:
+                - ".opendistro-alerting-config"
+                - ".opendistro-alerting-alert*"
+              allowed_actions: [ "crud" ]
+        manage_index:
+          index_permissions:
+            - index_patterns: [ "*" ]
+              allowed_actions: [ "indices:admin/resolve/index" ]
       rolesMapping.yml:
         _meta:
           type: "rolesmapping"
