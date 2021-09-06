@@ -1,7 +1,7 @@
 # override to use internal repo
 image: "docker.artifact.xtraman.org/opensearchproject/opensearch"
 
-# Allows you to add any config files in {{ .Values.configPath }}/config
+# Allows you to add any config files in {{ .Values.opensearchHome }}/config
 # such as opensearch.yml and log4j2.properties
 config:
   opensearch.yml:
@@ -35,3 +35,64 @@ config:
     ######## End OpenSearch Security Demo Configuration ########
     cluster.routing.allocation.disk.threshold_enabled: false
     node.max_local_storage_nodes: 3
+
+securityConfig:
+  enabled: true
+  path: "/usr/share/opensearch/plugins/opensearch-security/securityconfig"
+  actionGroupsSecret:
+  configSecret:
+  internalUsersSecret:
+  rolesSecret:
+  rolesMappingSecret:
+  tenantsSecret:
+  #The following option simplifies securityConfig by using a single secret and specifying the respective secrets in the corresponding files instead of creating different secrets for config,internal users, roles, roles mapping and tenants
+  #Note that this is an alternative to the above secrets and shouldn't be used if the above secrets are used
+  config:
+    securityConfigSecret:
+    data:
+      config.yml:
+        _meta:
+          type: "config"
+          config_version: 2
+        config:
+          dynamic:
+            kibana:
+              multitenancy_enabled: true
+          blah-blah-blah-insert-values-here: ""  # todo: copypasta
+      internal_users.yml:
+        _meta:
+          type: "internalusers"
+          config_version: 2
+        admin:
+          hash: "bcript hash generated with plugins/tools/hash.sh"
+          reserved: true
+          backend_roles:
+            - "admin"
+        kibanaserver:
+          hash: "bcript hash generated with plugins/tools/hash.sh"
+          reserved: true
+      roles.yml:
+        _meta:
+          type: "roles"
+          config_version: 2
+        kibana_read_only:
+          reserved: true
+        security_rest_api_access:
+          reserved: true
+        blah-blah-blah-insert-values-here: ""  # todo: copypasta
+      rolesMapping.yml:
+        _meta:
+          type: "rolesmapping"
+          config_version: 2
+        all_access:
+          reserved: false
+          backend_roles: [ "admin" ]
+          description: "Maps admin to all_access"
+        kibana_user:
+          reserved: false
+          backend_roles: [ "access" ]
+          description: "Maps access to kibana_user"
+        manage_index:
+          reserved: false
+          backend_roles: [ "access" ]
+          description: "Maps access to manage_index, to allow user to create index partitions"
