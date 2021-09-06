@@ -20,4 +20,5 @@
 # todo
 
 * tolerations and node selectors
-* how to insert the pem files?
+* how to insert the pem files? 
+  * https://opensearch.org/docs/security-plugin/configuration/generate-certificates/
