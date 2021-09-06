@@ -59,7 +59,39 @@ securityConfig:
           dynamic:
             kibana:
               multitenancy_enabled: true
-          blah-blah-blah-insert-values-here: ""  # todo: copypasta
+              server_username: admin
+              index: '.kibana'
+            do_not_fail_on_forbidden: false
+            http:
+              anonymous_auth_enabled: false
+              xff:
+                enabled: true
+                internalProxies: '.*' # regex pattern
+                remoteIpHeader: "x-forwarded-for"
+            authc:
+              basic_internal_auth_domain:
+                description: "Authenticate via HTTP Basic against internal users database"
+                http_enabled: true
+                transport_enabled: true
+                order: 1
+                http_authenticator:
+                  type: basic
+                  challenge: false
+                authentication_backend:
+                  type: internal
+              proxy_auth_domain:
+                description: "Authenticate via Proxy Header"
+                http_enabled: true
+                transport_enabled: true
+                order: 0
+                http_authenticator:
+                  type: proxy
+                  challenge: false
+                  config:
+                    user_header: "X-Username"
+                    roles_header: "X-Roles"
+                authentication_backend:
+                  type: noop
       internal_users.yml:
         _meta:
           type: "internalusers"
