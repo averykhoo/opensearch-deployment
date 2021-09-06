@@ -98,12 +98,12 @@ securityConfig:
           type: "internalusers"
           config_version: 2
         admin:
-          hash: "bcript hash generated with plugins/tools/hash.sh"
+          hash: "bcript hash generated with plugins/tools/hash.sh"  # todo: copypasta
           reserved: true
           backend_roles:
             - "admin"
         kibanaserver:
-          hash: "bcript hash generated with plugins/tools/hash.sh"
+          hash: "bcript hash generated with plugins/tools/hash.sh"  # todo: copypasta
           reserved: true
       roles.yml:
         _meta:
@@ -134,7 +134,7 @@ securityConfig:
           index_permissions:
             - index_patterns: [ "*" ]
               allowed_actions: [ "indices:admin/resolve/index" ]
-      rolesMapping.yml:
+      roles_mapping.yml:
         _meta:
           type: "rolesmapping"
           config_version: 2
