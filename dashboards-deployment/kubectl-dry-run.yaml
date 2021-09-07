@@ -1,0 +1,346 @@
+CONSOLE-LOG-LINE:
+  install.go:173:
+    [ debug ] Original chart version: ""
+  install.go:190:
+    [ debug ] CHART PATH: /home/user/Desktop/opensearch-deployment/opensearch-dashboards-1.0.0.tgz
+
+NAME: osd
+LAST DEPLOYED: Tue Sep  7 19:08:31 2021
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+  config:
+    opensearch_dashboards.yml:
+      opensearch:
+        hosts: http://elasticsearch-cluster-master:9200
+        password: admin
+        requestHeadersWhitelist:
+          - securitytenant
+          - Authorization
+          - X-Forwarded-For
+          - X-Username
+          - X-Roles
+        ssl.verificationMode: none
+        username: admin
+      plugins:
+        security:
+          auth.type: proxy
+          multitenancy:
+            enable_filter: false
+            enabled: true
+            tenants:
+              enable_global: true
+              enable_private: true
+          proxycache:
+            roles_header: X-Roles
+            roles_separator: ','
+            user_header: X-Username
+          readonly_mode.roles:
+            - kibana_read_only
+        ssl:
+          certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
+          enabled: false
+          key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+      security.showInsecureClusterWarning: false
+      server:
+        host: "0"
+        name: kibana
+  image: docker.artifact.xtraman.org/opensearchproject/opensearch-dashboards
+
+COMPUTED VALUES:
+  affinity: { }
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  config:
+    opensearch_dashboards.yml:
+      opensearch:
+        hosts: http://elasticsearch-cluster-master:9200
+        password: admin
+        requestHeadersWhitelist:
+          - securitytenant
+          - Authorization
+          - X-Forwarded-For
+          - X-Username
+          - X-Roles
+        ssl.verificationMode: none
+        username: admin
+      opensearch.ssl.certificateAuthorities: /usr/share/opensearch-dashboards/certs/dashboards-root-ca.pem
+      plugins:
+        security:
+          auth.type: proxy
+          multitenancy:
+            enable_filter: false
+            enabled: true
+            tenants:
+              enable_global: true
+              enable_private: true
+          proxycache:
+            roles_header: X-Roles
+            roles_separator: ','
+            user_header: X-Username
+          readonly_mode.roles:
+            - kibana_read_only
+        ssl:
+          certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
+          enabled: false
+          key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+      security.showInsecureClusterWarning: false
+      server:
+        host: "0"
+        name: kibana
+        ssl:
+          certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
+          enabled: false
+          key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+  envFrom: [ ]
+  extraContainers: ""
+  extraEnvs: [ ]
+  extraInitContainers: ""
+  fullnameOverride: ""
+  hostAliases: [ ]
+  image: docker.artifact.xtraman.org/opensearchproject/opensearch-dashboards
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets: [ ]
+  imageTag: 1.0.0
+  ingress:
+    annotations: { }
+    enabled: false
+    hosts:
+      - host: chart-example.local
+        paths:
+          - backend:
+              serviceName: chart-example.local
+              servicePort: 80
+            path: /
+    tls: [ ]
+  labels: { }
+  nameOverride: ""
+  nodeSelector: { }
+  opensearchAccount:
+    keyPassphrase:
+      enabled: false
+    secret: ""
+  opensearchHosts: https://opensearch-cluster-master:9200
+  podAnnotations: { }
+  podSecurityContext: { }
+  priorityClassName: ""
+  rbac:
+    create: true
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 512M
+    requests:
+      cpu: 100m
+      memory: 512M
+  secretMounts: [ ]
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 1000
+  serverHost: 0.0.0.0
+  service:
+    annotations: { }
+    httpPortName: http
+    labels: { }
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: [ ]
+    nodePort: ""
+    port: 5601
+    type: ClusterIP
+  serviceAccount:
+    annotations: { }
+    create: true
+    name: ""
+  tolerations: [ ]
+  updateStrategy:
+    type: Recreate
+
+HOOKS:
+MANIFEST:
+---
+# Source: opensearch-dashboards/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: osd-opensearch-dashboards-dashboards
+  labels:
+    helm.sh/chart: opensearch-dashboards-1.0.0
+    app.kubernetes.io/name: opensearch-dashboards
+    app.kubernetes.io/instance: osd
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: opensearch-dashboards/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: osd-opensearch-dashboards-config
+  labels:
+    helm.sh/chart: opensearch-dashboards-1.0.0
+    app.kubernetes.io/name: opensearch-dashboards
+    app.kubernetes.io/instance: osd
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+data:
+  opensearch_dashboards.yml: |
+    opensearch:
+      hosts: http://elasticsearch-cluster-master:9200
+      password: admin
+      requestHeadersWhitelist:
+        - securitytenant
+        - Authorization
+        - X-Forwarded-For
+        - X-Username
+        - X-Roles
+      ssl.verificationMode: none
+      username: admin
+    opensearch.ssl.certificateAuthorities: /usr/share/opensearch-dashboards/certs/dashboards-root-ca.pem
+    plugins:
+      security:
+        auth.type: proxy
+        multitenancy:
+          enable_filter: false
+          enabled: true
+          tenants:
+            enable_global: true
+            enable_private: true
+        proxycache:
+          roles_header: X-Roles
+          roles_separator: ','
+          user_header: X-Username
+        readonly_mode.roles:
+          - kibana_read_only
+      ssl:
+        certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
+        enabled: false
+        key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+    security.showInsecureClusterWarning: false
+    server:
+      host: "0"
+      name: kibana
+      ssl:
+        certificate: /usr/share/opensearch-dashboards/certs/dashboards-crt.pem
+        enabled: false
+        key: /usr/share/opensearch-dashboards/certs/dashboards-key.pem
+---
+# Source: opensearch-dashboards/templates/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: osd-opensearch-dashboards
+    chart: "opensearch-dashboards-1.0.0"
+    release: "osd"
+    heritage: "Helm"
+  name: osd-opensearch-dashboards-dashboards-rolebinding
+roleRef:
+  kind: Role
+  name: osd-opensearch-dashboards-dashboards
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: osd-opensearch-dashboards-dashboards
+    namespace: default
+---
+# Source: opensearch-dashboards/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: osd-opensearch-dashboards
+  labels:
+    helm.sh/chart: opensearch-dashboards-1.0.0
+    app.kubernetes.io/name: opensearch-dashboards
+    app.kubernetes.io/instance: osd
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5601
+      protocol: TCP
+      name: http
+      targetPort: 5601
+  selector:
+    app: opensearch-dashboards
+    release: "osd"
+---
+# Source: opensearch-dashboards/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: osd-opensearch-dashboards
+  labels:
+    helm.sh/chart: opensearch-dashboards-1.0.0
+    app.kubernetes.io/name: opensearch-dashboards
+    app.kubernetes.io/instance: osd
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: opensearch-dashboards
+      release: "osd"
+  template:
+    metadata:
+      labels:
+        app: opensearch-dashboards
+        release: "osd"
+      annotations:
+        configchecksum: 6a60c2c7c0941d0e8a0991bd613d5c63594c23f34fad6d0a1b6a0110a9d8a64
+    spec:
+      securityContext:
+        { }
+      serviceAccountName: osd-opensearch-dashboards-dashboards
+      volumes:
+        - name: config
+          configMap:
+            name: osd-opensearch-dashboards-config
+      containers:
+        - name: dashboards
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "docker.artifact.xtraman.org/opensearchproject/opensearch-dashboards:1.0.0"
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: OPENSEARCH_HOSTS
+              value: "https://opensearch-cluster-master:9200"
+            - name: SERVER_HOST
+              value: "0.0.0.0"
+          ports:
+            - containerPort: 5601
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 512M
+            requests:
+              cpu: 100m
+              memory: 512M
+          volumeMounts:
+            - name: config
+              mountPath: /usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
+              subPath: opensearch_dashboards.yml
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=opensearch-dashboards,app.kubernetes.io/instance=osd" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT

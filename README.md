@@ -20,7 +20,11 @@
 
 # todo
 
-* tolerations and node selectors
+* url is going to change, and folder name will also change -> need to edit this readme when that happens 
+* before deployment to prod
+  * add tolerations and node selectors
+  * set security settings (eg. passwords/secrets)
+  * review todo items sprinkled around the values.yaml files
 * how to insert the pem files? 
   * https://opensearch.org/docs/security-plugin/configuration/generate-certificates/
 * how to use envoy and opa with kibana
